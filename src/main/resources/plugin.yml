@@ -1,0 +1,8 @@
+name: RadicalSkis
+version: '${project.version}'
+main: com.ladder98.radicalskis.RadicalSkis
+api-version: 1.18
+prefix: [ RadicalSkis ]
+authors: [ BranFlakes ]
+description: Radical, yo
+website: www.ladder98.com
