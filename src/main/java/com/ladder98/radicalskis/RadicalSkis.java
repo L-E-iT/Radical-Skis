@@ -3,6 +3,11 @@ package com.ladder98.radicalskis;
 import com.ladder98.radicalskis.Items.Poles;
 import com.ladder98.radicalskis.Items.Skis;
 import com.ladder98.radicalskis.Listeners.SkiListener;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -12,8 +17,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RadicalSkis extends JavaPlugin {
 
+    public static StateFlag SKI_ENABLE;
     ShapedRecipe skiRecipe = skiRecipe();
     ShapedRecipe poleRecipe = poleRecipe();
+
+    @Override
+    public void onLoad() {
+        FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
+        try {
+            StateFlag flag = new StateFlag("ski-enable", false);
+            registry.register(flag);
+            SKI_ENABLE = flag;
+        } catch (FlagConflictException e) {
+            Flag<?> existing = registry.get("ski-enable");
+            if (existing instanceof StateFlag) {
+                SKI_ENABLE = (StateFlag) existing;
+            } else {
+                Bukkit.getLogger().warning("THIS IS TOTALLY NOT RADICAL DUDE");
+            }
+        }
+    }
 
     @Override
     public void onEnable() {

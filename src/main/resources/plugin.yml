@@ -6,3 +6,4 @@ prefix: [ RadicalSkis ]
 authors: [ BranFlakes ]
 description: Radical, yo
 website: www.ladder98.com
+depend: [WorldGuard]
